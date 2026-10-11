@@ -1,0 +1,18 @@
+{
+  "[java]": {
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+      "source.organizeImports": "explicit"
+    }
+  },
+  "java.configuration.updateBuildConfiguration": "automatic",
+  "java.import.gradle.wrapper.enabled": true,
+  "files.exclude": {
+    "**/.gradle": true,
+    "**/build": true
+  },
+  "search.exclude": {
+    "**/.gradle": true,
+    "**/build": true
+  }
+}

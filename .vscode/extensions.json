@@ -1,0 +1,12 @@
+{
+  "recommendations": [
+    "vscjava.vscode-java-pack",
+    "vmware.vscode-spring-boot",
+    "vscjava.vscode-gradle",
+    "shengchen.vscode-checkstyle",
+    "redhat.vscode-yaml",
+    "ms-azuretools.vscode-docker",
+    "github.vscode-github-actions",
+    "gitlab.gitlab-workflow"
+  ]
+}
