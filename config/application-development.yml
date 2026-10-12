@@ -1,0 +1,13 @@
+logging:
+  level:
+    com.okcapital: DEBUG
+
+server:
+  error:
+    include-message: always
+
+springdoc:
+  api-docs:
+    enabled: true
+  swagger-ui:
+    enabled: true
