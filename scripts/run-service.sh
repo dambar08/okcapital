@@ -20,4 +20,4 @@ if ! command -v java >/dev/null 2>&1; then
 fi
 
 echo "Starting $SERVICE with Gradle bootRun..."
-exec ./gradlew ":$SERVICE:bootRun" -Dspring-boot.run.arguments="--spring.profiles.active=local" "$@"
+exec ./gradlew ":$SERVICE:bootRun" -Dspring-boot.run.arguments="--spring.profiles.active=development" "$@"
