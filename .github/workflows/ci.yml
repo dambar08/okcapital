@@ -1,0 +1,81 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  service-tests:
+    name: Test ${{ matrix.service }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        service:
+          - account-service
+          - api-gateway
+          - application-service
+          - approval-service
+          - audit-service
+          - auth-service
+          - collections-service
+          - credit-service
+          - customer-service
+          - disbursement-service
+          - document-service
+          - fraud-service
+          - ledger-service
+          - notification-service
+          - payment-service
+          - product-service
+          - repayment-service
+          - reporting-service
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '25'
+
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v4
+
+      - name: Run service tests
+        run: ./gradlew --no-daemon ":${{ matrix.service }}:test"
+
+  integration:
+    name: Aggregate integration verification
+    runs-on: ubuntu-latest
+    needs: service-tests
+    timeout-minutes: 30
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '25'
+
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v4
+
+      - name: Run Checkstyle, aggregate tests, and build application jars
+        run: ./gradlew --no-daemon checkstyleMain checkstyleTest test bootJar
