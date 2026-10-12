@@ -1,0 +1,4 @@
+rootProject.name = 'ledger-service'
+
+include('shared-kernel')
+project(':shared-kernel').projectDir = file('../shared-kernel')
