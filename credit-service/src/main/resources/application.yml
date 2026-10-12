@@ -1,0 +1,37 @@
+server:
+  port: 8084
+
+spring:
+  application:
+    name: credit-service
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/okcapital_credit}
+    username: ${DB_USERNAME:okcapital_app}
+    password: ${DB_PASSWORD:okcapital_app}
+  jpa:
+    hibernate:
+      ddl-auto: ${JPA_DDL_AUTO:update}
+    open-in-view: false
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,prometheus
+  endpoint:
+    health:
+      probes:
+        enabled: true
+
+logging:
+  level:
+    root: INFO
+
+app:
+  service-name: credit-service
+  credit-bureau:
+    transunion:
+      endpoint: ${TU_API_URL:}
+      access-token: ${TU_ACCESS_TOKEN:}
+
+# Production defaults should use secrets and environment variables.
