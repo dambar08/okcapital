@@ -22,7 +22,8 @@ public class CreditBureauExceptionHandler {
     ) {
         return ResponseEntity.status(exception.getStatus())
                 .body(ApiErrorResponse.of(
-                        exception.getStatus(),
+                        exception.getStatus().value(),
+                        exception.getStatus().getReasonPhrase(),
                         exception.getMessage(),
                         request.getRequestURI(),
                         Map.of()

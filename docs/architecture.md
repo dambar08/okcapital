@@ -64,7 +64,9 @@ sequenceDiagram
 ## HTTP error handling
 
 All Spring MVC services and the API gateway include the shared error handler from
-`shared-kernel`. Error responses use a common JSON shape:
+`shared-kernel`. The module keeps its web and validation framework dependencies
+internal; its shared error response is a framework-independent DTO, while JPA is
+exposed only for the shared persistence base classes. Error responses use a common JSON shape:
 
 ```json
 {

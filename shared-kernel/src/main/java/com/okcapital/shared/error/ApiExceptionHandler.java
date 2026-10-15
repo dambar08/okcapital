@@ -189,8 +189,10 @@ public class ApiExceptionHandler {
             HttpServletRequest request,
             Map<String, String> details
     ) {
+        HttpStatus resolvedStatus = HttpStatus.resolve(status.value());
+        String error = resolvedStatus == null ? "HTTP Error" : resolvedStatus.getReasonPhrase();
         return ResponseEntity.status(status)
-                .body(ApiErrorResponse.of(status, message, request.getRequestURI(), details));
+                .body(ApiErrorResponse.of(status.value(), error, message, request.getRequestURI(), details));
     }
 
     private String messageOrDefault(Exception exception, String defaultMessage) {

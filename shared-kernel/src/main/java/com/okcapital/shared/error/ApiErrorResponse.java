@@ -1,8 +1,5 @@
 package com.okcapital.shared.error;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
-
 import java.time.Instant;
 import java.util.Map;
 
@@ -20,13 +17,12 @@ public record ApiErrorResponse(
     }
 
     public static ApiErrorResponse of(
-            HttpStatusCode status,
+            int status,
+            String error,
             String message,
             String path,
             Map<String, String> details
     ) {
-        HttpStatus resolvedStatus = HttpStatus.resolve(status.value());
-        String error = resolvedStatus == null ? "HTTP Error" : resolvedStatus.getReasonPhrase();
-        return new ApiErrorResponse(Instant.now(), status.value(), error, message, path, details);
+        return new ApiErrorResponse(Instant.now(), status, error, message, path, details);
     }
 }
