@@ -1,3 +1,3 @@
 rootProject.name = 'okcapital'
 
-include('shared-kernel', 'auth-service', 'customer-service', 'application-service', 'document-service', 'credit-service', 'approval-service', 'product-service', 'disbursement-service', 'account-service', 'repayment-service', 'notification-service', 'payment-service', 'ledger-service', 'audit-service', 'fraud-service', 'collections-service', 'reporting-service', 'api-gateway')
+include( 'discovery', 'shared-kernel', 'auth-service', 'customer-service', 'application-service', 'document-service', 'credit-service', 'approval-service', 'product-service', 'disbursement-service', 'account-service', 'repayment-service', 'notification-service', 'payment-service', 'ledger-service', 'audit-service', 'fraud-service', 'collections-service', 'reporting-service', 'api-gateway')
