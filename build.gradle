@@ -12,9 +12,14 @@ allprojects {
     }
 }
 
+ext {
+    set('springCloudVersion', '2025.0.1')
+}
+
 subprojects {
     apply plugin: 'java'
     apply plugin: 'checkstyle'
+    apply plugin: 'io.spring.dependency-management'
 
     sourceSets.main.resources.srcDir(rootProject.file('config'))
 
@@ -30,6 +35,12 @@ subprojects {
     java {
         toolchain {
             languageVersion = JavaLanguageVersion.of(25)
+        }
+    }
+
+    dependencyManagement {
+        imports {
+            mavenBom "org.springframework.cloud:spring-cloud-dependencies:${rootProject.ext.springCloudVersion}"
         }
     }
 
