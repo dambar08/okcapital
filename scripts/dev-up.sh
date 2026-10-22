@@ -24,5 +24,5 @@ docker compose up -d --no-deps postgres kafka keycloak minio
 echo "Local development dependencies are running."
 echo "- PostgreSQL: localhost:5432"
 echo "- Kafka: localhost:9092"
-echo "- Keycloak: http://localhost:8081"
+echo "- Keycloak: http://localhost:9080"
 echo "- MinIO: http://localhost:9001"

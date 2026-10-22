@@ -41,15 +41,33 @@ services:
       retries: 20
 
   keycloak:
-    image: quay.io/keycloak/keycloak:26.2.1
-    command: start-dev --http-port=8081 --db=dev-file
+    image: quay.io/keycloak/keycloak:26.5.5
+    command: start-dev
     container_name: okcapital-keycloak
+    volumes:
+      - ./docker/realm-config:/opt/keycloak/data/import
+      - ./docker/realm-config/keycloak-health-check.sh:/opt/keycloak/health-check.sh
     environment:
-      KEYCLOAK_ADMIN: admin
-      KEYCLOAK_ADMIN_PASSWORD: admin
-
+      KC_DB: dev-file
+      KC_BOOTSTRAP_ADMIN_USERNAME: admin
+      KC_BOOTSTRAP_ADMIN_PASSWORD: admin
+      KC_FEATURES: scripts
+      KC_HTTP_PORT: 9080
+      KC_HTTPS_PORT: 9443
+      KC_HEALTH_ENABLED: true
+      KC_HTTP_MANAGEMENT_PORT: 9990
     ports:
-      - "8081:8081"
+      - "9080:9080"
+      - "9443:9443"
+    healthcheck:
+      test: 'bash /opt/keycloak/health-check.sh'
+      interval: 5s
+      timeout: 5s
+      # Increased retries due to slow Keycloak startup in GitHub Actions using MacOS
+      retries: 50
+      start_period: 10s
+    labels:
+      org.springframework.boot.ignore: true
 
   redis:
     image: redis:7.4-alpine
