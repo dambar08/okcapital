@@ -6,6 +6,7 @@ services:
       POSTGRES_DB: okcapital_platform
       POSTGRES_USER: okcapital_app
       POSTGRES_PASSWORD: okcapital_app
+      POSTGRES_HOST_AUTH_METHOD: trust
     ports:
       - "5432:5432"
     volumes:
@@ -72,6 +73,7 @@ services:
   redis:
     image: redis:7.4-alpine
     restart: unless-stopped
+    container_name: okcapital-redis
     ports:
       - "6379:6379"
     volumes:
