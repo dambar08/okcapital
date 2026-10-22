@@ -8,11 +8,25 @@ spring:
     url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/okcapital_reporting}
     username: ${DB_USERNAME:okcapital_app}
     password: ${DB_PASSWORD:okcapital_app}
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      maximum-pool-size: 10
+      minimum-idle: 5
+      idle-timeout: 300000
+      connection-timeout: 20000
   jpa:
     hibernate:
       ddl-auto: ${JPA_DDL_AUTO:update}
     open-in-view: false
-
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        jdbc:
+          lob:
+            non_contextual_creation: true
+            
 management:
   endpoints:
     web:
@@ -29,5 +43,10 @@ logging:
 
 app:
   service-name: reporting-service
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
 
 # Production defaults should use secrets and environment variables.
