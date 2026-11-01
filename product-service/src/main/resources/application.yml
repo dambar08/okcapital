@@ -30,4 +30,9 @@ logging:
 app:
   service-name: product-service
 
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+
 # Production defaults should use secrets and environment variables.
