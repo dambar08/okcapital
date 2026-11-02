@@ -1,0 +1,24 @@
+spring:
+    application:
+        name: discovery
+server:
+    port: 8761
+
+management:
+    endpoints:
+        web:
+            exposure:
+              include: health,info,prometheus
+    endpoint:
+        health:
+            probes:
+                enabled: true
+    metrics:
+        export:
+            prometheus:
+                enabled: true
+        
+eureka:
+    client:
+        register-with-eureka: false
+        fetch-registry: false
