@@ -7,6 +7,6 @@
     "redhat.vscode-yaml",
     "ms-azuretools.vscode-docker",
     "github.vscode-github-actions",
-    "gitlab.gitlab-workflow"
+    "ms-azuretools.vscode-containers"
   ]
 }
