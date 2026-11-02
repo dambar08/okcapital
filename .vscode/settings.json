@@ -1,19 +1,33 @@
 {
+  "editor.quickSuggestions": {
+    "other": "on",
+    "comments": "off",
+    "strings": "on"
+  },
   "[java]": {
     "editor.formatOnSave": true,
     "editor.codeActionsOnSave": {
       "source.organizeImports": "explicit"
-    }
+    },
   },
+  "java.completion.enabled": true,
+  "java.referencesCodeLens.enabled": true,
+  "java.referencesCodeLens.includeFields": true,
+  "java.signatureHelp.enabled": true,
+  "java.import.gradle.enabled": true,
   "java.configuration.updateBuildConfiguration": "automatic",
   "java.import.gradle.wrapper.enabled": true,
+  "java.import.maven.enabled": false,
+  "java.errors.incompleteClasspath.severity": "warning",
   "files.exclude": {
     "**/.gradle": true,
     "**/build": true,
     "**/bin": true
   },
+  
   "search.exclude": {
     "**/.gradle": true,
     "**/build": true
-  }
+  },
+  "redhat.telemetry.enabled": false
 }
