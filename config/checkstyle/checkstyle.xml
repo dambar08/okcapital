@@ -4,6 +4,8 @@
     "https://checkstyle.org/dtds/configuration_1_3.dtd">
 <module name="Checker">
     <property name="charset" value="UTF-8"/>
+    <!-- Configure check to run on files with these extensions -->
+    <property name="fileExtensions" value=""/>
     <property name="severity" value="error"/>
     <module name="FileTabCharacter"/>
     <module name="NewlineAtEndOfFile"/>
@@ -20,6 +22,6 @@
         <module name="WhitespaceAfter"/>
         <module name="WhitespaceAround"/>
         <module name="ModifierOrder"/>
-        <module name="UnusedImports"/>
+    <module name="UnusedImports"/>
     </module>
 </module>
