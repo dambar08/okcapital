@@ -134,6 +134,30 @@ services:
   #       condition: service_healthy
   #     keycloak:
   #       condition: service_started
+  # This configuration is intended for development purpose, it's **your** responsibility to harden it for production
+  prometheus:
+    image: prom/prometheus:v3.15.1
+    container_name: okcapital-prometheus
+    volumes:
+      - ./docker/prometheus/:/etc/prometheus/
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+    ports:
+      - "9090:9090"
+    # network_mode: 'host' # to test locally running service
+
+  grafana:
+    image: grafana/grafana:12.4.1
+    container_name: okcapital-grafana
+    volumes:
+      - ./docker/grafana/provisioning/:/etc/grafana/provisioning/
+    environment:
+      GF_SECURITY_ADMIN_PASSWORD: admin
+      GF_USERS_ALLOW_SIGN_UP: false
+      # GF_INSTALL_PLUGINS: grafana-piechart-panel
+    ports:
+      - "3000:3000"
+    # network_mode: 'host' # to test locally running service
 
 volumes:
   postgres_data:

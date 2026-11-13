@@ -1,0 +1,119 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: okcapital-postgres
+    environment:
+      POSTGRES_DB: okcapital_platform
+      POSTGRES_USER: okcapital_app
+      POSTGRES_PASSWORD: okcapital_app
+      POSTGRES_HOST_AUTH_METHOD: trust
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./infrastructure/postgres/init-databases.sql:/docker-entrypoint-initdb.d/10-init-databases.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U okcapital_app -d okcapital_platform"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    labels:
+      org.springframework.boot.ignore: true
+
+  kafka:
+    image: apache/kafka:4.2.2
+    container_name: okcapital-kafka
+    environment:
+      KAFKA_CFG_NODE_ID: 1
+      KAFKA_CFG_PROCESS_ROLES: controller,broker
+      KAFKA_CFG_LISTENERS: PLAINTEXT://:9092,CONTROLLER://:9093
+      KAFKA_CFG_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092
+      KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP: CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT
+      KAFKA_CFG_CONTROLLER_QUORUM_VOTERS: 1@kafka:9093
+      KAFKA_CFG_CONTROLLER_LISTENER_NAMES: CONTROLLER
+      KAFKA_CFG_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_CFG_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
+      KAFKA_CFG_TRANSACTION_STATE_LOG_MIN_ISR: 1
+      KAFKA_CFG_AUTO_CREATE_TOPICS_ENABLE: 'true'
+    ports:
+      - "9092:9092"
+    healthcheck:
+      test: ["CMD-SHELL", "/opt/bitnami/kafka/bin/kafka-topics.sh --bootstrap-server localhost:9092 --list >/dev/null 2>&1 || exit 1"]
+      interval: 10s
+      timeout: 10s
+      retries: 20
+    labels:
+      org.springframework.boot.ignore: true
+
+  keycloak:
+    image: quay.io/keycloak/keycloak:26.5.5
+    # command: start-dev --import-realm
+    command: start-dev
+    container_name: okcapital-keycloak
+    volumes:
+      - ./realm-config:/opt/keycloak/data/import
+      - ./realm-config/keycloak-health-check.sh:/opt/keycloak/health-check.sh
+    environment:
+      KC_DB: dev-file
+      KC_BOOTSTRAP_ADMIN_USERNAME: admin
+      KC_BOOTSTRAP_ADMIN_PASSWORD: admin
+      KC_FEATURES: scripts
+      KC_HTTP_PORT: 9080
+      KC_HTTPS_PORT: 9443
+      KC_HEALTH_ENABLED: true
+      KC_HTTP_MANAGEMENT_PORT: 9990
+    ports:
+      - "9080:9080"
+      - "9443:9443"
+    healthcheck:
+      test: 'bash /opt/keycloak/health-check.sh'
+      interval: 5s
+      timeout: 5s
+      # Increased retries due to slow Keycloak startup in GitHub Actions using MacOS
+      retries: 50
+      start_period: 10s
+    labels:
+      org.springframework.boot.ignore: true
+
+  redis:
+    image: redis:7.4-alpine
+    restart: unless-stopped
+    container_name: okcapital-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    command: redis-server --save "" --appendonly no
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+    labels:
+      org.springframework.boot.ignore: true
+
+  memcached:
+    image: memcached:1.6.41-alpine
+    container_name: okcapital-memcached
+    ports:
+      - "11211:11211"
+    labels:
+      org.springframework.boot.ignore: true
+
+  # minio:
+  #   image: minio/minio:RELEASE.2025-04-08T15-41-10Z
+  #   container_name: okcapital-minio
+  #   command: server /data --console-address ':9001'
+  #   environment:
+  #     MINIO_ROOT_USER: minioadmin
+  #     MINIO_ROOT_PASSWORD: minioadmin
+  #   ports:
+  #     - "9000:9000"
+  #     - "9001:9001"
+  #   volumes:
+  #     - minio_data:/data
+
+volumes:
+  postgres_data:
+  minio_data:
+  redis_data:
