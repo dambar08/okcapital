@@ -12,6 +12,8 @@ allprojects {
     }
 }
 
+defaultTasks "bootRun"
+
 ext {
     set('springCloudVersion', '2025.1.4')
 }
