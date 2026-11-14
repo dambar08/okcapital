@@ -107,6 +107,16 @@ services:
     labels:
       org.springframework.boot.ignore: true
 
+  
+  mailpit:
+    image: axllent/mailpit:v1.33.1
+    container_name: okcapital-mailpit
+    ports:
+      - "1025:1025" # SMTP
+      - "8025:8025" # Web UI
+    labels:
+      org.springframework.boot.ignore: true
+
   # minio:
   #   image: minio/minio:RELEASE.2025-04-08T15-41-10Z
   #   container_name: okcapital-minio
