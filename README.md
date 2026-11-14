@@ -124,6 +124,9 @@ Swagger UI and OpenAPI docs are enabled for every service in the `development` a
 `http://localhost:<service-port>/swagger-ui/index.html` for Swagger UI or
 `http://localhost:<service-port>/v3/api-docs` for the OpenAPI document.
 
+Default application and local infrastructure ports are listed in
+[docs/service-ports.md](./docs/service-ports.md).
+
 ## Build and run
 
 ```bash
