@@ -4,6 +4,8 @@ server:
 spring:
   application:
     name: credit-service
+  profiles:
+    default: dev
   datasource:
     url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/okcapital_credit}
     username: ${DB_USERNAME:okcapital_app}

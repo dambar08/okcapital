@@ -4,6 +4,8 @@ server:
 spring:
   application:
     name: notification-service
+  profiles:
+    default: dev
   datasource:
     url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/okcapital_notification}
     username: ${DB_USERNAME:okcapital_app}
@@ -12,7 +14,7 @@ spring:
     hibernate:
       ddl-auto: ${JPA_DDL_AUTO:update}
     open-in-view: false
-
+  
 management:
   endpoints:
     web:

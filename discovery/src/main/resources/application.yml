@@ -1,6 +1,8 @@
 spring:
     application:
         name: discovery
+    profiles:
+        default: dev
 server:
     port: 8761
 

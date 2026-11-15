@@ -4,6 +4,8 @@ server:
 spring:
   application:
     name: payment-service
+  profiles:
+    default: dev
   datasource:
     url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/okcapital_payment}
     username: ${DB_USERNAME:okcapital_app}

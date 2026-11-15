@@ -4,6 +4,8 @@ server:
 spring:
   application:
     name: document-service
+  profiles:
+    default: dev
   servlet:
     multipart:
       max-file-size: ${DOCUMENT_MAX_FILE_SIZE:10MB}
